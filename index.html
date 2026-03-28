@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Регистрация в боте</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background: rgba(0,0,0,0.5);
+        padding: 30px 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+    }
+    h1 {
+        margin-bottom: 25px;
+        font-size: 24px;
+    }
+    input {
+        width: 100%;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 8px;
+        background: #ff4b2b;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        background: #ff416c;
+    }
+    p {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Регистрация</h1>
+    <form id="registrationForm">
+        <input type="text" id="name" placeholder="Ваше имя" required>
+        <input type="number" id="age" placeholder="Ваш возраст" required>
+        <input type="date" id="birthday" placeholder="Дата рождения" required>
+        <button type="submit">Зарегистрироваться</button>
+        <p id="status"></p>
+    </form>
+</div>
+
+<script>
+const tg = window.Telegram.WebApp;
+
+document.getElementById("registrationForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const age = document.getElementById("age").value.trim();
+    const birthday = document.getElementById("birthday").value;
+
+    if (!name || !age || !birthday) {
+        document.getElementById("status").textContent = "❌ Заполните все поля!";
+        return;
+    }
+
+    // Отправка данных обратно боту
+    tg.sendData(JSON.stringify({ name, age, birthday }));
+
+    document.getElementById("status").textContent = "✅ Данные отправлены!";
+});
+</script>
+</body>
+</html>
